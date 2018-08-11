@@ -1,0 +1,15 @@
+com\oc\projet3\escalade\model\RegionRepository.class
+com\oc\projet3\escalade\controler\SiteController.class
+com\oc\projet3\escalade\EscaladeApplication.class
+com\oc\projet3\escalade\controler\TopoController.class
+com\oc\projet3\escalade\model\SectorComments.class
+com\oc\projet3\escalade\model\SiteRepository.class
+com\oc\projet3\escalade\controler\HomeController.class
+com\oc\projet3\escalade\model\Sector.class
+com\oc\projet3\escalade\model\Topo.class
+com\oc\projet3\escalade\model\Way.class
+com\oc\projet3\escalade\model\Region.class
+com\oc\projet3\escalade\model\Site.class
+com\oc\projet3\escalade\config\SecurityConfig.class
+com\oc\projet3\escalade\model\TopoRepository.class
+com\oc\projet3\escalade\model\User.class

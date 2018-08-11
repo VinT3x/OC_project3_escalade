@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <title th:text="${topo.getRegion().getName()}"></title>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover({
+                placement : 'top',
+                trigger : 'hover'
+            });
+        });
+    </script>
+    <style type="text/css">
+        .popover{
+            max-width: 80%; /* Max Width of the popover (depending on the container!) */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1 align="center">Les topos de la région <span th:text="${topo.getRegion().getName()}">Occitanie</span></h1>
+    </div>
+    <ul>
+        <li th:each="topo : ${topos}">
+            <p th:text="${topo.getName()}">Nouvelle-Aquitaine</p>
+            <table class="table table-sm table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">site</th>
+                    <th scope="col">lieu</th>
+                    <th scope="col">categorie</th>
+                    <th scope="col">description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="site,iter : ${topo.getSites()}">
+                    <th scope="row"><span th:text="${iter.count}"></span></th>
+                    <td> <a th:href="@{/site(id=${site.getId()})}"><span th:text="${site.getName()}"></span></a></td>
+                    <td> <span th:text="${site.getPlace()}"></span></td>
+                    <!-- <td>${ site.description }</td> -->
+                    <td> <span th:text="${site.getCategory()}"></span></td>
+                    <!-- <td><a href="#" data-toggle="tooltip" data-placement="right" title="${ site.description }">desc.</a> -->
+                    <td><a href="#" placement="leftbottom" th:title="${site.getName()}" data-toggle="popover" data-trigger="hover" th:attr="data-content=${site.getDescription()}">desc</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </li>
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
+</body>
+</html>
