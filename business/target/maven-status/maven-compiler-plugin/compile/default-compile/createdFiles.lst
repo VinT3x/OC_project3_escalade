@@ -1,0 +1,4 @@
+com\oc\projet3\escalade\contract\publication.class
+com\oc\projet3\escalade\contract\Comment.class
+com\oc\projet3\escalade\impl\CommentForm.class
+com\oc\projet3\escalade\impl\SearchForm.class

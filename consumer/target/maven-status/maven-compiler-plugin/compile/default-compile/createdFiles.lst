@@ -1,0 +1,4 @@
+com\oc\projet3\escalade\contract\RegionRepository.class
+com\oc\projet3\escalade\contract\SiteRepository.class
+com\oc\projet3\escalade\contract\TopoRepository.class
+com\oc\projet3\escalade\contract\TopoCommentRepository.class

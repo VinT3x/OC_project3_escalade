@@ -1,0 +1,46 @@
+
+<a class="badge badge-secondary" data-toggle="collapse" role="button" th:href="'#collapse'+${topo.getId()}" th:attr="aria-controls='collapse'+${topo.getId()}" aria-expanded="false" th:text="#{topo.comments}">
+    Comments
+</a>
+<div class="collapse" th:id="'collapse'+${topo.getId()}">
+    <div class="modal-header">
+        <!-- Button trigger modal -->
+        <a class="badge badge-secondary" data-toggle="modal" role="button"  th:attr="data-target='#modal'+${topo.getId()}" th:href="'#modal'+${topo.getId()}" th:text="#{topo.commentsAdd}">ajouter commentaire</a>
+    </div>
+    <div class="card card-body">
+        <span th:each="comment : ${topo.getTopoComments()}">
+           <span th:text="${comment.getComments()}">commentaire ...</span>
+        </span>
+    </div>
+</div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" th:id="'modal'+${topo.getId()}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel" th:text="#{topo.comments} + ' '+ ${topo.getName()}">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                    <form action="#" th:action="@{/topos/comment}" th:object="${commentForm}"  modelAttribute="commentForm" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="comments">Comment:</label>
+                                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+                        </div>
+                    </form>
+
+
+            </div>
+        </div>
+    </div>
