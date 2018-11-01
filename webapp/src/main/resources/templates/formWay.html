@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title th:text="#{form.create.Title.way}">nouveau topo</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1 th:text="#{form.create.Title.Body.way}">création d'un nouveau topo</h1>
+    </div>
+    <!-- Include _menu.html -->
+    <th:block th:include="/_menu"></th:block>
+
+    <div class="dropdown">
+        <form action="#" th:action="@{/way/add}" th:object="${way}" method="post">
+            <div class="form-group"  >
+                <div th:if="${sectors != null }">
+                    <span th:text="#{form.create.field.sector.way}">Spot :</span>
+                        <select th:field="*{sectors}">
+                            <option th:each="sector : ${sectors}" th:value="${sector.getId()}" th:text="${sector.getName()}">Occitanie</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('sectors')}" th:errors="*{sectors}" th:errorclass="fieldError">Name Error</span>
+
+                </div>
+            </div>
+            <div class="form-group" th:class="${#fields.hasErrors('name')}? has-error" >
+                    <label for="name" th:text="#{form.create.field.name}">nom</label>
+                    <input type="text"  class="form-control" th:field="*{name}" placeholder=""/>
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="fieldError">Name Error</span>
+            </div>
+            <div class="form-group" th:class="${#fields.hasErrors('description')}? has-error" >
+                <label for="description" th:text="#{form.create.field.description}">nom</label>
+                <input type="text"  class="form-control" th:field="*{description}" placeholder=""/>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="fieldError">Name Error</span>
+            </div>
+            <div class="form-group" th:class="${#fields.hasErrors('height')}? has-error" >
+                <label for="height" th:text="#{form.create.field.height}">blabla</label>
+                <input type="text" class="form-control" th:field="*{height}" placeholder=""/>
+                <span th:if="${#fields.hasErrors('height')}" th:errors="*{height}" th:errorclass="fieldError">Name Error</span>
+            </div>
+            <div class="form-group" th:class="${#fields.hasErrors('quotations')}? has-error" >
+                <label for="quotations" th:text="#{form.create.field.quotations}">blabla</label>
+                <input type="text" class="form-control" th:field="*{quotations}" placeholder=""/>
+                <span th:if="${#fields.hasErrors('quotations')}" th:errors="*{quotations}" th:errorclass="fieldError">Name Error</span>
+            </div>
+
+            <div class="form-group" th:class="${#fields.hasErrors('nb_point')}? has-error" >
+                <label for="nb_point" th:text="#{form.create.field.nbOfpoints}">blabla</label>
+                <input type="text" class="form-control" th:field="*{nb_point}" placeholder=""/>
+                <span th:if="${#fields.hasErrors('nb_point')}" th:errors="*{nb_point}" th:errorclass="fieldError">Name Error</span>
+            </div>
+
+
+            <button style="margin-top:10px" class="btn btn-default" type="submit" th:text="#{form.create.button.save}">Submit</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

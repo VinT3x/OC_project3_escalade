@@ -1,0 +1,13 @@
+<div th:fragment="spotsList">
+<div class="form-group"  >
+    <div th:if="${spots != null }">
+        <p>Spot<br>
+            <span th:each="checkboxItem : ${spots}">
+                            <input type="checkbox"  th:field="*{spots}" th:value="${checkboxItem.id}">
+                            <label th:text="${checkboxItem.getName()}">1</label>
+                            <br>
+                        </span>
+        </p>
+    </div>
+</div>
+</div>

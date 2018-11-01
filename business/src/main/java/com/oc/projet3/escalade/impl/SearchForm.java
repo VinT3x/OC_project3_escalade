@@ -1,10 +1,7 @@
 package com.oc.projet3.escalade.impl;
 
-import com.oc.projet3.escalade.contract.RegionRepository;
 import com.oc.projet3.escalade.entities.Region;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;

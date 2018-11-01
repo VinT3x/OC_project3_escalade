@@ -4,88 +4,48 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="default">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <meta charset="utf-8" />
-    <title th:text="#{topo.titlePage}">Résultat de la recherche</title>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('[data-toggle="popover"]').popover({
-                placement : 'top',
-                trigger : 'hover'
-            });
-        });
-    </script>
-    <style type="text/css">
-        .popover{
-            max-width: 80%; /* Max Width of the popover (depending on the container!) */
-        }
-    </style>
+    <title th:text="${topo.getName()}"></title>
+
 </head>
 <body>
 <div class="container">
     <div class="jumbotron clearfix">
-        <h1 align="center" th:text="#{topo.title}">Les topos trouvés</h1>
+        <h1 align="center" th:text="${topo.getName()}"></h1>
     </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong th:text="#{topo.criteria}">Critères de recherches :</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="row">
-            <div class="col">
-                <div th:if="${recherche.getStartDate() != null }">
-                    <span th:text="#{topo.criteriaStart} + ' ' + ${#dates.format(recherche.getStartDate(), 'dd-MM-yyyy')}">19/12/2008</span>
-                </div>
-                <div th:if="${recherche.getEndDate() != null }">
-                    <span th:text="#{topo.criteriaEnd} + ' ' + ${#dates.format(recherche.getEndDate(), 'dd-MM-yyyy')}">19/12/2008</span>
-                </div>
-            </div>
-            <div class="col" th:if="${recherche.getRegionsChoisi() != null }">
-                <span th:text="#{topo.criteriaRegion}+ ' ' ">région(s) :</span>
-                <ul>
-                    <span th:each="region : ${recherche.getRegionsChoisi()}">
-                        <li><a th:href="'#'+${region.getName()}" th:text="${region.getName()}">Occitanie</a></li>
-                    </span>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <ul>
-        <li th:each="region : ${regions}">
-            <p th:id="${region.getName()}" th:text="${region.getName()}">Nouvelle-Aquitaine</p>
-            <span th:each="topo : ${region.getTopos()}">
-                <span th:text="${topo.getName()}">Nouvelle-Aquitaine</span>
-                <a href="#" class="badge badge-primary" th:text="#{topo.resa}">réserver</a>
-                <!--COMMENTS-->
-                <th:block th:insert="fragment/comments"></th:block>
+    <!--MENU-->
+    <th:block th:insert="_menu"></th:block>
+    <a href="#" class="badge badge-primary" th:text="#{topo.resa}">réserver</a>
+    <!--COMMENTS-->
+    <th:block th:insert="fragment/comments"></th:block>
 
-
-                    <table class="table table-sm table-dark">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">site</th>
-                            <th scope="col">lieu</th>
-                            <th scope="col">categorie</th>
-                            <th scope="col">description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="site,iter : ${topo.getSites()}">
-                            <th scope="row"><span th:text="${iter.count}"></span></th>
-                            <td> <a th:href="@{/site(id=${site.getId()})}"><span th:text="${site.getName()}"></span></a></td>
-                            <td> <span th:text="${site.getPlace()}"></span></td>
-                            <!-- <td>${ site.description }</td> -->
-                            <td> <span th:text="${site.getCategory()}"></span></td>
-                            <!-- <td><a href="#" data-toggle="tooltip" data-placement="right" title="${ site.description }">desc.</a> -->
-                            <td><a href="#" placement="leftbottom" th:title="${site.getName()}" data-toggle="popover" data-trigger="hover" th:attr="data-content=${site.getDescription()}">desc</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-            </span>
-        </li>
-    </ul>
+    <table class="table table-sm table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">site</th>
+            <th scope="col">lieu</th>
+            <th scope="col">categorie</th>
+            <th scope="col">description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="spot,iter : ${topo.getSpots()}">
+            <th scope="row"><span th:text="${iter.count}"></span></th>
+            <td> <a th:href="@{/spot(id=${spot.getId()})}"><span th:text="${spot.getName()}"></span></a></td>
+            <td> <span th:text="${spot.getPlace()}"></span></td>
+            <!-- <td>${ site.description }</td> -->
+            <td> <span th:text="${spot.getCategory()}"></span></td>
+            <!-- <td><a href="#" data-toggle="tooltip" data-placement="right" title="${ site.description }">desc.</a> -->
+            <td><a href="#" placement="leftbottom" th:title="${spot.getName()}" data-toggle="popover" data-trigger="hover" th:attr="data-content=${spot.getDescription()}">desc</a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
