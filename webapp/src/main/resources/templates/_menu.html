@@ -1,0 +1,38 @@
+<div xmlns:th="http://www.thymeleaf.org">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <!--<img class="navbar-brand" th:src="@{images/logo-montagne.png}" alt="logo-montagne" height="70" width="85">-->
+            </div>
+            <div class="nav navbar-nav">
+                <li class="active"><a class="active" th:href="@{/}">Home</a></li>
+                <!--<li><a href="#">Page 2</a></li>-->
+                <li class="dropdown" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span th:text="#{navbar.action.add}">Créer</span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a th:href="@{/topo/add}">topo</a></li>
+                        <li><a th:href="@{/spot/add}">spot</a></li>
+                        <li><a th:href="@{/sector/add}">sector</a></li>
+                        <li><a th:href="@{/way/add}">way</a></li>
+                    </ul>
+                </li> <!-- .dropdown -->
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" th:if="${#request.userPrincipal == null}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li class="dropdown" th:if="${#request.userPrincipal != null}">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" th:text="${#authentication.getPrincipal().getUsername()}">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a th:href="@{/logout}" th:text="#{navbar.logout}">Action</a></li>
+                    </ul>
+                </li>
+                <!--<li th:if="${#request.userPrincipal != null}">-->
+                    <!--<a  th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>-->
+                <!--</li>-->
+                <li th:if="${#request.userPrincipal == null}"><a  th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>

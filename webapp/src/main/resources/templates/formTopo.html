@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title th:text="${action} == 'edit' ? #{topo.editTitle}: #{topo.createTitle}">nouveau topo</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1 th:text="${action} == 'edit' ? 'edition' : #{topo.createTitleBody}">création d'un nouveau topo</h1>
+    </div>
+    <!-- Include _menu.html -->
+    <th:block th:include="/_menu"></th:block>
+
+    <div class="dropdown">
+        <form action="#" th:action="${action} == 'edit' ? @{/topo/edit/} + ${id} : @{/topo/add}" th:object="${topo}" method="post">
+            <div class="form-group"  >
+                <div th:if="${regions != null }">
+                    <p th:text="#{form.label.region}">Régions :</p>
+                        <select th:field="*{region_id}" id="region_id">
+                            <option value=0 th:text="#{form.selectValue.region}">Select region</option>
+                            <option th:each="region : ${regions}" th:value="${region.id}" th:text="${region.name}">Occitanie</option>
+                        </select>
+                        <p th:if="${#fields.hasErrors('region_id')}" th:errors="*{region_id}" class="alert alert-danger">Name Error</p>
+                </div>
+            </div>
+            <div class="form-group">
+                    <label for="name" th:text="#{topo.createName}">nom</label>
+                    <input type="text"  class="form-control" th:field="*{name}" placeholder=""/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger">Name Error</p>
+            </div>
+            <div class="form-group">
+                <label for="description" th:text="#{topo.createDescription}">blabla</label>
+                <input type="text" class="form-control" th:field="*{description}" placeholder=""/>
+                <!--<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="fieldError">Name Error</span>-->
+            </div>
+            <!--liste spots-->
+            <div id="spotBlock">
+                <div th:fragment="spotsList">
+                    <div class="form-group"  >
+                        <div th:if="${spots != null } and ${spots.size() &gt; 0 }">
+                            <p>Spot<br>
+                                <span th:each="checkboxItem : ${spots}" multiple="multiple">
+                            <input type="checkbox"  th:field="*{spots}" th:value="${checkboxItem.id}" >
+                            <label th:text="${checkboxItem.getName()}">1</label>
+                            <br>
+                        </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <button style="margin-top:10px" class="btn btn-default" type="submit">Submit</button>
+        </form>
+
+    </div>
+</div>
+<script>
+    $('#region_id').change(function() {
+        var url = '.';
+
+        if ($('#region_id').val() != '') {
+            url = url + '/spot/' + $('#region_id').val();
+        }
+
+        $("#spotBlock").load(url);
+    });
+</script>
+</body>
+</html>
